@@ -6,12 +6,24 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
   <script src="./script.js"></script>
 	<title>Instamood</title>
+	<style>
+		.stats{text-align: center;}
+		img{height:300px;}
+		.pictures {height:500px;}
+		 li{display:inline;}
+		 h1{color:red;}
+		 a:hover{cursor:pointer;}
+
+	</style>
 </head>
 <body ng-app="Instamood">
 	<div class="container" ng-controller="MainCtrl">
+	<!-- <div class="row"><div class="col-md-offset-5 col-md-7"><h1>INSTAMOOD</h1></div></div> -->
 		<div class="row">
+		<div class="stats">
+		<h1>INSTAMOOD</h1>
 			<div class="login-btn btn" ng-hide="hasToken" ng-click="getInstaPics()">
-				  <a href="https://api.instagram.com/oauth/authorize/?client_id=8ae6b7dda3b340b588c0734820a6ed11&redirect_uri=http://localhost:8001&response_type=token" class="btn btn-info btn-lg btn-block">
+				  <a href="https://api.instagram.com/oauth/authorize/?client_id=01507c2354314508b0f628bebc85f5c5&redirect_uri=http://localhost:8000&response_type=token" class="btn btn-info btn-lg btn-block">
           <i class="fa fa-instagram"></i>
             Log in with Instagram
           </a>
@@ -20,12 +32,38 @@
         <!-- challenge: make it so that you don't have to click this link for
              the pictures the load -->
 				<a ng-click="getInstaPics()">Load pictures!</a>
-				<ul>
+				<a ng-click="getInstaStats()">Get Insta Stats!</a>
+				<!-- <a ng-click="analyzeSentiments()">Get Sentiments!</a> -->
+				<p></p>
+				<a ng-click="getDescendingLikes()">Display in Descending Order by Likes</a>
+				<a ng-click="getAscendingDate()">Display in Ascending Order by Date</a>
+				
+				<p>Ego Score: {{perc}} %</p>
+				<p>Popularity: {{totalLikes}} Likes</p>
+				<p>Active Days: {{activedays}}</p>
+				<p>Brevity: {{avgCaptionLength}} characters</p>
+				<p>Visibility Thirst: {{totalHashtags}}</p>
+				</div>
+		</div>
+		</div>
+		
+	<!-- <div> {{analyzeSentiments("hi")}}</div>  -->
+		<div class="row pictures">
+
+			<ul style="list-style:none">
           <!-- this loops through all your pictures -->
+   
 					<li ng-repeat="pic in picArray track by $index">
-            {{ pic }} <!-- what should be here instead? -->
+    					       <div class="col-sm-4">
+    					       	<div class="pictures">
+					        <div> <img ng-src="{{pic.images.low_resolution.url }}"> </div> 
+					        <div class="col-sm-11"><div>{{ pic.caption.text}}<!-- what should be here instead? --></div></div> </div>
+					        <!-- <div class="col-sm-11"><div>{{analyzeSentiments("hi")}}what should be here instead?</div></div> </div> -->
+				        </div>
 					</li>
+			
 				</ul>
+		</div>
 			</div>
 		</div>
 	</div>
